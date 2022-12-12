@@ -112,24 +112,26 @@ const PublicFolder = () => {
 
     return (
         <FolderContainer>
-            <div>
+            <QrContainer>
                 <QRCodeCanvas
                     value={`http://localhost:3000/public/folder/${params.folderId}`}
                     id="qr-gen"
                 />
                 <Button onClick={downloadQRCode}>Download QR</Button>
-            </div>
+            </QrContainer>
 
             {pdfs.map((pdf) => {
                 return (
                     <DocumentContainer>
-                        <div>
+                        <DocumentContainer1>
                             <PdfInfo docName={pdf.name} />
-                        </div>
-                        <div>
+                        </DocumentContainer1>
+                        <DocumentContainer2>
                             <StyledIframe src={pdf.url}></StyledIframe>
-                            <a href={pdf.url}>Open PDF</a>
-                        </div>
+                            <Button>
+                                <a href={pdf.url}>Open PDF</a>
+                            </Button>
+                        </DocumentContainer2>
                     </DocumentContainer>
                 );
             })}
@@ -140,8 +142,19 @@ const PublicFolder = () => {
 export default PublicFolder;
 
 const FolderContainer = styled.div`
-    margin-left: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     /* background-color: grey; */
+`;
+
+const QrContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    padding: 15px;
+    margin-top: 25px;
 `;
 
 const StyledIframe = styled.iframe`
@@ -151,13 +164,24 @@ const StyledIframe = styled.iframe`
 
 const DocumentContainer = styled.div`
     display: flex;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    justify-content: center;
-    /* align-items: center; */
-    /* background-color: blue; */
-
+    flex-direction: column;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
     & > div {
+        display: flex;
+        flex-direction: column;
+    }
+`;
+const DocumentContainer1 = styled.div``;
+
+const DocumentContainer2 = styled.div`
+    align-items: center;
+    & button {
+        width: 50%;
+        margin: 15px 0px;
     }
 `;
 

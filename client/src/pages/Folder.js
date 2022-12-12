@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button } from "../components/styles/Button";
 import { UploadButton } from "../components/styles/UploadButton.styled";
 import axios from "axios";
-
+import Home from "./Home";
 import { useParams, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import PdfInfo from "../components/PdfInfo";
@@ -132,13 +132,14 @@ const Folder = () => {
 
     return (
         <FolderContainer>
-            <div>
+            <h2></h2>
+            <QrContainer>
                 <QRCodeCanvas
                     value={`http://localhost:3000/public/folder/${params.folderId}`}
                     id="qr-gen"
                 />
                 <Button onClick={downloadQRCode}>Download QR</Button>
-            </div>
+            </QrContainer>
             <SelectionContainer>
                 <select name="" id="" onChange={handleDocType}>
                     {docs.map((doc) => {
@@ -166,7 +167,7 @@ const Folder = () => {
             {pdfs.map((pdf) => {
                 return (
                     <DocumentContainer>
-                        <div>
+                        <iframeContainer1>
                             <PdfInfo docName={pdf.name} />
 
                             <Button
@@ -175,8 +176,8 @@ const Folder = () => {
                                 onClick={() => handleOpenModal(pdf._id)}
                             >
                                 {/* todo fix sx, align item */}
-                                <GrAdd sx={{ fill: "white" }} />
-                                Document Name
+                                {/* <GrAdd sx={{ fill: "white" }} /> */}
+                                Change Document Name
                             </Button>
                             <AddDocInfoModal
                                 getPdfs={getPdfs}
@@ -184,10 +185,10 @@ const Folder = () => {
                                 open={openModal}
                                 handleClose={() => setOpenModal(false)}
                             />
-                        </div>
-                        <div>
+                        </iframeContainer1>
+                        <iframeContainer2>
                             <StyledIframe src={pdf.url}></StyledIframe>
-                        </div>
+                        </iframeContainer2>
                     </DocumentContainer>
                 );
             })}
@@ -198,30 +199,64 @@ const Folder = () => {
 export default Folder;
 
 const FolderContainer = styled.div`
-    margin-left: 175px;
+    /* margin-left: 175px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* justify-content: center; */
     /* background-color: grey; */
 `;
 
+const QrContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    padding: 15px;
+    margin-top: 25px;
+
+    & button {
+        width: 126px;
+        margin: 15px 0px;
+    }
+`;
+
 const StyledIframe = styled.iframe`
-    width: 30vw;
-    height: 40vh;
+    margin: 15px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const DocumentContainer = styled.div`
     display: flex;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    flex-direction: column;
+    /* margin-top: 100px; */
+    /* margin-bottom: 100px; */
     justify-content: center;
-    /* align-items: center; */
+    align-items: center;
     /* background-color: blue; */
-
-    & > div {
-    }
 `;
 
 const SelectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 100px;
+    margin-bottom: 15px;
+
+    & input,
+    select {
+        text-align: center;
+    }
     /* background-color: red; */
+`;
+
+// const iframeContainer2 = styled.div`
+//     display: flex;
+//     flex-direction: column;
+// `;
+
+const iframeContainer1 = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
